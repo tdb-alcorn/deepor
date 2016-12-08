@@ -16,7 +16,7 @@ function get(obj, pathArray) {
 function set(obj, pathArray, value) {
     if (pathArray && pathArray.constructor === Array) {
         for (var i=0, len=pathArray.length, keys=Object.keys(obj); i<(len-1); i++) {
-            if (keys.indexOf(pathArray[i] === -1)) {
+            if (keys.indexOf(pathArray[i]) === -1) {
                 obj[pathArray[i]] = new Object();
             }
             obj = obj[pathArray[i]];
