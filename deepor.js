@@ -1,13 +1,12 @@
 function get(obj, pathArray) {
     if (pathArray && pathArray.constructor === Array) {
-        for (var i=0, len=pathArray.length, keys=Object.keys(obj); i<len; i++) {
-            if (keys.indexOf(pathArray[i]) === -1) {
+        for (var i=0, len=pathArray.length; i<len; i++) {
+            try {
+                obj = obj[pathArray[i]];
+            } catch (err) {
                 break;
             }
-            obj = obj[pathArray[i]];
-            keys = Object.keys(obj);
         }
-
         return obj;
     }
     return undefined;
@@ -15,12 +14,15 @@ function get(obj, pathArray) {
 
 function set(obj, pathArray, value) {
     if (pathArray && pathArray.constructor === Array) {
-        for (var i=0, len=pathArray.length, keys=Object.keys(obj); i<(len-1); i++) {
-            if (keys.indexOf(pathArray[i]) === -1) {
+        for (var i=0, len=pathArray.length; i<(len-1); i++) {
+            try {
+                if (obj[pathArray[i]] === undefined) {
+                    throw new Error();
+                }
+            } catch (err) {
                 obj[pathArray[i]] = new Object();
             }
             obj = obj[pathArray[i]];
-            keys=Object.keys(obj);
         }
         obj[pathArray[len-1]] = value;
     }
